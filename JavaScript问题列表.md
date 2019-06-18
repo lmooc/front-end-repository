@@ -205,57 +205,579 @@ Person.prototype.getFullName = function () {
 ```
 12. 输出是什么？
 ```
+function Person(firstName, lastName) {
+  this.firstName = firstName
+  this.lastName = lastName
+}
 
-```
-> 输出 
-```
+const lydia = new Person('Lydia', 'Hallie')
+const sarah = Person('Sarah', 'Smith')
 
+console.log(lydia)
+console.log(sarah)
 ```
-13. 输出是什么？
++ A: Person {firstName: "Lydia", lastName: "Hallie"} and undefined
++ B: Person {firstName: "Lydia", lastName: "Hallie"} and Person {firstName: "Sarah", lastName: "Smith"}
++ C: Person {firstName: "Lydia", lastName: "Hallie"} and {}
++ D:Person {firstName: "Lydia", lastName: "Hallie"} and ReferenceError
+> 输出 A
 ```
+对于 sarah，我们没有使用 new 关键字。当使用 new 时，this 引用我们创建的空对象。当使用了 new，this 引用的是全局对象（global object）。
 
+我们说 this.firstName 等于 "Sarah"，并且 this.lastName 等于 "Smith"。实际上我们做的是，定义了 global.firstName = 'Sarah' 和 global.lastName = 'Smith'。而 sarah 本身是 undefined。
 ```
-> 输出 
+13. 事件冒泡的三个阶段是什么？
 ```
-
+A: Target > Capturing > Bubbling
+B: Bubbling > Target > Capturing
+C: Target > Bubbling > Capturing
+D: Capturing > Target > Bubbling
 ```
-14. 输出是什么？
+> 输出 D
 ```
-
+在捕获（capturing）阶段中，事件从祖先元素向下传播到目标元素。当事件达到目标（target）元素后，冒泡（bubbling）才开始。
+![]('./img/2.png')
 ```
-> 输出 
+14. 所有对象都有原型
 ```
-
+A: true
+B: false
+```
+> 输出 B
+```
+除了基本对象（base object），所有对象都有原型。基本对象可以访问一些方法和属性，比如 .tostring。这就是为什么你可以使用内置的 JavaScript 方法！所有这些方法在原型上都是可用的。虽然 JavaScript 不能直接在对象上找到这些方法，但 JavaScript 会沿着原型链找到它们，以便于你使用。
 ```
 15. 输出是什么？
 ```
+function sum(a, b) {
+  return a + b
+}
 
-```
-> 输出 
-```
+sum(1, '2')
 
+A: NaN
+B: TypeError
+C: "12"
+D: 3
+```
+> 输出 C
+```
+JavaScript 是一种动态类型语言：我们不指定某些变量的类型。值可以在你不知道的情况下自动转换成另一种类型，这种类型称为隐式类型转换（implicit type coercion）。Coercion 是指将一种类型转换为另一种类型。
+
+在本例中，JavaScript 将数字 1 转换为字符串，以便函数有意义并返回一个值。在数字类型（1）和字符串类型（'2'）相加时，该数字被视为字符串。我们可以连接字符串，比如 "Hello" + "World"，这里发生的是 "1" + "2"，它返回 "12"。
 ```
 16. 输出是什么？
 ```
-
+let number = 0
+console.log(number++)
+console.log(++number)
+console.log(number)
 ```
-> 输出 
+> 输出 0 2 2
 ```
+一元后自增运算符 ++：
 
+返回值（返回 0）
+值自增（number 现在是 1）
+一元前自增运算符 ++：
+
+值自增（number 现在是 2）
+返回值（返回 2）
+结果是 0 2 2.
 ```
 17. 输出是什么？
 ```
+function getPersonInfo(one, two, three) {
+  console.log(one)
+  console.log(two)
+  console.log(three)
+}
 
-```
-> 输出 
-```
+const person = 'Lydia'
+const age = 21
 
+getPersonInfo`${person} is ${age} years old`
+
+A: "Lydia" 21 ["", " is ", " years old"]
+B: ["", " is ", " years old"] "Lydia" 21
+C: "Lydia" ["", " is ", " years old"] 21
+```
+> 输出 B
+```
+如果使用标记模板字面量，第一个参数的值总是字符串值的数组。其余的参数获取的是传递的表达式的值！
 ```
 18. 输出是什么？
 ```
+function checkAge(data) {
+  if (data === { age: 18 }) {
+    console.log('You are an adult!')
+  } else if (data == { age: 18 }) {
+    console.log('You are still an adult.')
+  } else {
+    console.log(`Hmm.. You don't have an age I guess`)
+  }
+}
+
+checkAge({ age: 18 })
+
+A: You are an adult!
+B: You are still an adult.
+C: Hmm.. You don't have an age I guess
+```
+> 输出 C
+```
+在测试相等性时，基本类型通过它们的值（value）进行比较，而对象通过它们的引用（reference）进行比较。JavaScript 检查对象是否具有对内存中相同位置的引用。
+
+题目中我们正在比较的两个对象不是同一个引用：作为参数传递的对象引用的内存位置，与用于判断相等的对象所引用的内存位置并不同。
+
+这也是 { age: 18 } === { age: 18 } 和 { age: 18 } == { age: 18 } 都返回 false 的原因。
+```
+19. 输出是什么？
+```
+function getAge(...args) {
+  console.log(typeof args)
+}
+
+getAge(21)
+
+A: "number"
+B: "array"
+C: "object"
+D: "NaN"
+```
+> 输出 C
+```
+扩展运算符（...args）会返回实参组成的数组。而数组是对象，因此 typeof args 返回 "object"。
+```
+20. 输出是什么？
+```
+function getAge() {
+  'use strict'
+  age = 21
+  console.log(age)
+}
+
+getAge()
+
+A: 21
+B: undefined
+C: ReferenceError
+D: TypeError
+```
+> 输出 C
+```
+使用 "use strict"，你可以确保不会意外地声明全局变量。我们从来没有声明变量 age，因为我们使用 "use strict"，它将抛出一个引用错误。如果我们不使用 "use strict"，它就会工作，因为属性 age 会被添加到全局对象中了。
+```
+21. 输出是什么？
+```
+const sum = eval('10*10+5')
+
+A: 105
+B: "105"
+C: TypeError
+D: "10*10+5"
+```
+> 输出 A
+```
+代码以字符串形式传递进来，eval 对其求值。如果它是一个表达式，就像本例中那样，它对表达式求值。表达式是 10 * 10 + 5。这将返回数字 105。
+```
+
+22. cool_secret 可访问多长时间？
+```
+sessionStorage.setItem('cool_secret', 123)
+
+A: Forever, the data doesn't get lost.
+B: When the user closes the tab.
+C: When the user closes the entire browser, not only the tab.
+D: When the user shuts off their computer.
+```
+> 输出 B
+```
+关闭 tab 标签页 后，sessionStorage 存储的数据才会删除。
+
+如果使用 localStorage，那么数据将永远在那里，除非调用了 localStorage.clear()。
+```
+23. 输出是什么？
+```
+var num = 8
+var num = 10
+
+console.log(num)
+
+A: 8
+B: 10
+C: SyntaxError
+D: ReferenceError
+```
+> 输出 B
+```
+使用 var 关键字，你可以用相同的名称声明多个变量。然后变量将保存最新的值。
+
+你不能使用 let 或 const 来实现这一点，因为它们是块作用域的。
+```
+24. 输出是什么？
+```
+const obj = { 1: 'a', 2: 'b', 3: 'c' }
+const set = new Set([1, 2, 3, 4, 5])
+
+obj.hasOwnProperty('1')
+obj.hasOwnProperty(1)
+set.has('1')
+set.has(1)
+
+A: false true false true
+B: false true true true
+C: true true false true
+D: true true true true
+```
+> 输出 C
+```
+所有对象的键（不包括 Symbol）在底层都是字符串，即使你自己没有将其作为字符串输入。这就是为什么 obj.hasOwnProperty('1') 也返回 true。
+
+对于集合，它不是这样工作的。在我们的集合中没有 '1'：set.has('1') 返回 false。它有数字类型为 1，set.has(1) 返回 true。
+```
+25. 输出是什么？
+```
+const obj = { a: 'one', b: 'two', a: 'three' }
+console.log(obj)
+
+A: { a: "one", b: "two" }
+B: { b: "two", a: "three" }
+C: { a: "three", b: "two" }
+D: SyntaxError
+```
+> 输出 C
+```
+如果你有两个名称相同的键，则键会被替换掉。它仍然位于第一个键出现的位置，但是值是最后出现那个键的值。
+```
+26. JavaScript 全局执行上下文为你做了两件事：全局对象和 this 关键字。
+```
+A: true
+B: false
+C: it depends
+```
+> 输出 A
+```
+基本执行上下文是全局执行上下文：它是代码中随处可访问的内容。
+```
+27. 输出是什么？
+```
+for (let i = 1; i < 5; i++) {
+  if (i === 3) continue
+  console.log(i)
+}
+
+A: 1 2
+B: 1 2 3
+C: 1 2 4
+D: 1 3 4
+```
+> 输出 C
+```
+如果某个条件返回 true，则 continue 语句跳过本次迭代。
+```
+28. 输出是什么？
+```
+String.prototype.giveLydiaPizza = () => {
+  return 'Just give Lydia pizza already!'
+}
+
+const name = 'Lydia'
+
+name.giveLydiaPizza()
+
+A: "Just give Lydia pizza already!"
+B: TypeError: not a function
+C: SyntaxError
+D: undefined
+```
+> 输出 A
+```
+String 是内置的构造函数，我们可以向它添加属性。我只是在它的原型中添加了一个方法。基本类型字符串被自动转换为字符串对象，由字符串原型函数生成。因此，所有 string(string 对象)都可以访问该方法！
+```
+29. 输出是什么？
+```
+const a = {}
+const b = { key: 'b' }
+const c = { key: 'c' }
+
+a[b] = 123
+a[c] = 456
+
+console.log(a[b])
+
+A: 123
+B: 456
+C: undefined
+D: ReferenceError
+```
+> 输出 B
+```
+对象的键被自动转换为字符串。我们试图将一个对象 b 设置为对象 a 的键，且相应的值为 123。
+
+然而，当字符串化一个对象时，它会变成 "[Object object]"。因此这里说的是，a["Object object"] = 123。然后，我们再一次做了同样的事情，c 是另外一个对象，这里也有隐式字符串化，于是，a["Object object"] = 456。
+
+然后，我们打印 a[b]，也就是 a["Object object"]。之前刚设置为 456，因此返回的是 456。
+```
+30. 输出是什么？
+```
+const foo = () => console.log('First')
+const bar = () => setTimeout(() => console.log('Second'))
+const baz = () => console.log('Third')
+
+bar()
+foo()
+baz()
+
+A: First Second Third
+B: First Third Second
+C: Second First Third
+D: Second Third First
+```
+> 输出 B
+```
+我们有一个 setTimeout 函数，并首先调用它。然而，它是最后打印日志的。
+
+这是因为在浏览器中，我们不仅有运行时引擎，还有一个叫做 WebAPI 的东西。WebAPI 提供了 setTimeout 函数，也包含其他的，例如 DOM。
 
 ```
-> 输出 
+31. 当点击按钮时，event.target是什么？
 ```
+<div onclick="console.log('first div')">
+  <div onclick="console.log('second div')">
+    <button onclick="console.log('button')">
+      Click!
+    </button>
+  </div>
+</div>
 
+A: Outer div
+B: Inner div
+C: button
+D: An array of all nested elements.
+```
+> 输出 C
+```
+导致事件的最深嵌套的元素是事件的 target。你可以通过 event.stopPropagation 来停止冒泡。
+```
+32. 当您单击该段落时，日志输出是什么？
+```
+<div onclick="console.log('div')">
+  <p onclick="console.log('p')">
+    Click here!
+  </p>
+</div>
+
+A: p div
+B: div p
+C: p
+D: div
+```
+> 输出 A
+```
+如果我们点击 p，我们会看到两个日志：p 和 div。在事件传播期间，有三个阶段：捕获、目标和冒泡。默认情况下，事件处理程序在冒泡阶段执行（除非将 useCapture 设置为 true）。它从嵌套最深的元素向外传播。
+```
+33. 输出是什么？
+```
+const person = { name: 'Lydia' }
+
+function sayHi(age) {
+  console.log(`${this.name} is ${age}`)
+}
+
+sayHi.call(person, 21)
+sayHi.bind(person, 21)
+
+A: undefined is 21 Lydia is 21
+B: function function
+C: Lydia is 21 Lydia is 21
+D: Lydia is 21 function
+```
+> 输出 D
+```
+使用这两种方法，我们都可以传递我们希望 this 关键字引用的对象。但是，.call 是立即执行的。
+
+.bind 返回函数的副本，但带有绑定上下文！它不是立即执行的。
+```
+34. 输出是什么？
+```
+function sayHi() {
+  return (() => 0)()
+}
+
+typeof sayHi()
+
+A: "object"
+B: "number"
+C: "function"
+D: "undefined"
+```
+> 输出 B
+```
+sayHi 方法返回的是立即执行函数(IIFE)的返回值.此立即执行函数的返回值是 0， 类型是 number
+
+参考：只有7种内置类型：null，undefined，boolean，number，string，object 和 symbol。 function 不是一种类型，函数是对象，它的类型是object。
+```
+35. 下面哪些值是 falsy?
+```
+0
+new Number(0)
+;('')
+;(' ')
+new Boolean(false)
+undefined
+
+A: 0, '', undefined
+B: 0, new Number(0), '', new Boolean(false), undefined
+C: 0, '', new Boolean(false), undefined
+D: All of them are falsy
+```
+> 输出 A
+```
+只有 6 种 falsy 值:
+
+undefined
+null
+NaN
+0
+'' (empty string)
+false
+Function 构造函数, 比如 new Number 和 new Boolean，是 truthy。
+```
+36. 输出是什么？
+```
+console.log(typeof typeof 1)
+
+A: "number"
+B: "string"
+C: "object"
+D: "undefined"
+```
+> 输出 B
+```
+typeof 1 返回 "number"。 typeof "number" 返回 "string"。
+```
+37. 输出是什么？
+```
+const numbers = [1, 2, 3]
+numbers[10] = 11
+console.log(numbers)
+
+A: [1, 2, 3, 7 x null, 11]
+B: [1, 2, 3, 11]
+C: [1, 2, 3, 7 x empty, 11]
+D: SyntaxError
+```
+> 输出 C
+```
+当你为数组设置超过数组长度的值的时候， JavaScript 会创建名为 "empty slots" 的东西。它们的值实际上是 undefined。你会看到以下场景：
+
+[1, 2, 3, 7 x empty, 11]
+
+这取决于你的运行环境（每个浏览器，以及 node 环境，都有可能不同）
+```
+38. 输出是什么？
+```
+;(() => {
+  let x, y
+  try {
+    throw new Error()
+  } catch (x) {
+    ;(x = 1), (y = 2)
+    console.log(x)
+  }
+  console.log(x)
+  console.log(y)
+})()
+
+A: 1 undefined 2
+B: undefined undefined undefined
+C: 1 1 2
+D: 1 undefined undefined
+```
+> 输出 A
+```
+catch 代码块接收参数 x。当我们传递参数时，这与之前定义的变量 x 不同 。这个 x 是属于 catch 块级作用域的。
+
+然后，我们将块级作用域中的变量赋值为 1，同时也设置了变量 y 的值。现在，我们打印块级作用域中的变量 x，值为 1。
+
+catch 块之外的变量 x 的值仍为 undefined， y 的值为 2。当我们在 catch 块之外执行 console.log(x) 时，返回 undefined，y 返回 2。
+```
+39. JavaScript 中的一切都是？
+```
+A: primitive or object
+B: function or object
+C: trick question! only objects
+D: number or object
+```
+> 输出 A
+```
+JavaScript 只有原始类型和对象。
+
+原始类型包括 boolean, null, undefined, bigint, number, string, symbol。
+```
+40. 输出是什么？
+```
+;[[0, 1], [2, 3]].reduce(
+  (acc, cur) => {
+    return acc.concat(cur)
+  },
+  [1, 2]
+)
+
+A: [0, 1, 2, 3, 1, 2]
+B: [6, 1, 2]
+C: [1, 2, 0, 1, 2, 3]
+D: [1, 2, 6]
+```
+> 输出 C
+```
+[1, 2]是初始值。初始值将会作为首次调用时第一个参数 acc 的值。
+在第一次执行时， acc 的值是 [1, 2]， cur 的值是 [0, 1]。合并它们，结果为 [1, 2, 0, 1]。 
+第二次执行， acc 的值是 [1, 2, 0, 1]， cur 的值是 [2, 3]。合并它们，最终结果为 [1, 2, 0, 1, 2, 3]
+```
+41. 输出是什么？
+```
+!!null
+!!''
+!!1
+
+A: false true false
+B: false false true
+C: false true true
+D: true true false
+```
+> 输出 B
+```
+null 是 falsy。 !null 的值是 true。 !true 的值是 false。
+
+"" 是 falsy。 !"" 的值是 true。 !true 的值是 false。
+
+1 是 truthy。 !1 的值是 false。 !false 的值是 true。
+```
+42. setInterval 方法的返回值是什么？
+```
+setInterval(() => console.log('Hi'), 1000)
+
+A: a unique id
+B: the amount of milliseconds specified
+C: the passed function
+D: undefined
+```
+> 输出 A
+```
+setInterval 返回一个唯一的 id。此 id 可被用于 clearInterval 函数来取消定时。
+```
+43. 输出是什么？
+```
+;[...'Lydia']
+
+A: ["L", "y", "d", "i", "a"]
+B: ["Lydia"]
+C: [[], "Lydia"]
+D: [["L", "y", "d", "i", "a"]]
+```
+> 输出 A
+```
+string 类型是可迭代的。扩展运算符将迭代的每个字符映射成一个元素。
 ```
