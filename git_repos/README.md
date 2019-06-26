@@ -55,26 +55,37 @@ Git在执行提交的时候，不是直接将工作树的状态保存到数据�
 
 
    + bugfix分支是从master分支分叉出来的。
+   
 !['分支'](https://backlog.com/git-tutorial/cn/img/post/stepup/capture_stepup1_4_1.png)
+
 合并 bugfix分支到master分支时，如果master分支的状态没有被更改过，那么这个合并是非常简单的。 bugfix分支的历史记录包含master分支所有的历史记录，所以通过把master分支的位置移动到bugfix的最新分支上，Git 就会合并。这样的合并被称为fast-forward（快进）合并。
+
 ![](https://backlog.com/git-tutorial/cn/img/post/stepup/capture_stepup1_4_2.png)
 
 
    + master分支的历史记录有可能在bugfix分支分叉出去后有新的更新。这种情况下，要把master分支的修改内容和bugfix分支的修改内容汇合起来。
+
 ![](https://backlog.com/git-tutorial/cn/img/post/stepup/capture_stepup1_4_3.png)
+
 合并两个修改会生成一个提交。这时，master分支的HEAD会移动到该提交上。
+
 ![](https://backlog.com/git-tutorial/cn/img/post/stepup/capture_stepup1_4_4.png)
 
 
 + rebase
 
 如下图所示，bugfix分支是从master分支分叉出来的
+
 ![](https://backlog.com/git-tutorial/cn/img/post/stepup/capture_stepup1_4_6.png)
+
 如果使用rebase方法进行分支合并，会出现下图所显示的历史记录。
+
 ![](https://backlog.com/git-tutorial/cn/img/post/stepup/capture_stepup1_4_7.png)
+
 首先，rebase bugfix分支到master分支, bugfix分支的历史记录会添加在master分支的后面。如图所示，历史记录成一条线，相当整洁。
 
 rebase之后，master的HEAD位置不变。因此，要合并master分支和bugfix分支，即是将master的HEAD移动到bugfix的HEAD这里。
+
 ![](https://backlog.com/git-tutorial/cn/img/post/stepup/capture_stepup1_4_9.png)
 
 Merge和rebase都是合并历史记录，但是各自的特征不同,
@@ -97,6 +108,7 @@ http://nvie.com/posts/a-successful-git-branching-model/
 + hotFix分支
 
 分别使用4个种类的分支来进行开发的。
+
 ![](https://backlog.com/git-tutorial/cn/img/post/stepup/capture_stepup1_5_6.png)
 
 >主分支
